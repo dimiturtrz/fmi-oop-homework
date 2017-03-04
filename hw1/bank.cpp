@@ -81,18 +81,21 @@ public:
 		stream<< firstName<< ", "<< lastName<< ", "<< balance<< endl;
 	}
 
-	void readName(ifstream& stream, char* name) {
+	void readName(ifstream& stream, bool first) {
+		char name[100];
 		char ch;
 		stream.get(ch);
 		int i;
 		for(i = 0; ch!=','; stream.get(ch))
 			name[i++] = ch;
 		name[i] = '\0';
+		stream.get(ch);
+		first? setFirstName(name) : setLastName(name);
 	}
 
 	void readFromFile(ifstream& stream) {
-		readName(stream, firstName);
-		readName(stream, lastName);
+		readName(stream, true);
+		readName(stream, false);
 		stream>> balance;
 		stream.ignore(5, '\n');
 	}
@@ -129,5 +132,21 @@ void generateFile() {
 
 int main () {
 	generateFile();
+	//а
+	Client clients[5];
+	ifstream clientsFile;
+	clientsFile.open("clients.txt", ios::in);
+	for(int i=0; i<5; i++) 
+		clients[i].readFromFile(clientsFile);
+	clientsFile.close();
+	//б
+	for(int i=0; i<5; i++)
+		clients[i].print();
+	//в
+	float sum = 0;
+	for(int i=0; i<5; i++)
+		sum += clients[i].getBalance();
+	cout<< sum<< endl;
+
 	return 0;
 }
