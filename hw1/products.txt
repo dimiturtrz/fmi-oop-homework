@@ -1,0 +1,5 @@
+screw driver| 456 5.5
+hammer| 324 8.2
+socket| 777 6.8
+plier| 123 10.8
+hand-saw| 555 12.8
