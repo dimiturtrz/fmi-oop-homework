@@ -22,6 +22,7 @@ struct Rect {
 		y = nY;
 	}
 
+	Rect(){}
 	Rect(Polar& polar);
 
 	void print(){
@@ -31,12 +32,13 @@ struct Rect {
 
 struct Polar {
 	double angle;
-	float radius;
-	Polar(double nAngle, float nRadius) {
+	double radius;
+	Polar(double nAngle, double nRadius) {
 		angle = nAngle;
 		radius = nRadius;
 	}
 
+	Polar() {}
 	Polar(Rect& rect);
 
 	void print(){
@@ -55,7 +57,29 @@ Polar::Polar(Rect& rect) {
 }
 
 int main () {
-	
+	char RorP;	
+	cout<< "type 'r' for rectangular, 'p' for polar"<< endl;
+	cin>> RorP;
+	int x, y;
+	Rect rect;
+	double angle, radius;
+	Polar pol;
+	for(int i=0; i<5; i++) {
+		switch(RorP) {
+			case 'r':
+				cin>> x>> y;
+				rect = Rect(x,y);
+				pol = Polar(rect);
+				pol.print();
+				break;
+			case 'p':
+				cin>> angle>> radius;
+				Polar pol = Polar(angle, radius);
+				rect = Rect(pol);
+				rect.print();
+		}
+		cout<< endl;
+	}
 
 	return 0;
 }
