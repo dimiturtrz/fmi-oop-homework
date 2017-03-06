@@ -17,10 +17,7 @@ double toDegrees(double rad){
 struct Rect {
 	int x;
 	int y;
-	Rect(int nX, int nY) {
-		x = nX;
-		y = nY;
-	}
+	Rect(int x, int y): x(x), y(y){}
 
 	Rect(){}
 	Rect(Polar& polar);
@@ -33,10 +30,7 @@ struct Rect {
 struct Polar {
 	double angle;
 	double radius;
-	Polar(double nAngle, double nRadius) {
-		angle = nAngle;
-		radius = nRadius;
-	}
+	Polar(double angle, double radius): angle(angle), radius(radius) {}
 
 	Polar() {}
 	Polar(Rect& rect);

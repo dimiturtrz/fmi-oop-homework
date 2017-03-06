@@ -7,7 +7,7 @@ struct S {
 	int c;
 
 	S() {}
-	S(int nA, int nB, int nC): a(nA), b(nB), c(nC){}
+	S(int a, int b, int c): a(a), b(b), c(c){}
 
 	void print() {
 		cout<< a<< " "<< b<< " "<< c<< endl;

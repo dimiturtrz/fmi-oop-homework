@@ -6,10 +6,7 @@ struct Point {
 	int y;
 
 	Point() {}
-	Point(int nX, int nY){
-		x = nX;
-		y = nY;
-	}
+	Point(int x, int y): x(x), y(y) {}
 
 	void print() {
 		cout<< "x: "<< x<< " y: "<< y<< endl;
