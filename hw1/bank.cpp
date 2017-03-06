@@ -19,21 +19,22 @@ public:
 	}
 
 	void setFirstName(const char* newFirstName) {
+		delete [] firstName;
 		firstName = new char[strlen(newFirstName)];
 		strcpy(firstName, newFirstName);
 	}
 
 	void setLastName(const char* newLastName) {
+		delete [] lastName;
 		lastName = new char[strlen(newLastName)];
 		strcpy(lastName, newLastName);
 	}
 
-	Person() {
-		firstName = NULL;
-		lastName = NULL;
-	}
+	Person(): firstName(NULL), lastName(NULL){}
 	Person(const char* newFirstName, const char* newLastName) {
+		firstName = NULL;
 		setFirstName(newFirstName);
+		lastName = NULL;
 		setLastName(newLastName);
 	}
 
