@@ -47,7 +47,7 @@ public:
 	}
 
 	bool operator!=(BankAccount& other) {
-		return *this == other;
+		return !(*this == other);
 	}
 
 	bool operator<(BankAccount& other) {
