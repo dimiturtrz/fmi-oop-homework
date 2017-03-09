@@ -27,7 +27,7 @@ public:
 		setNumber(accountNumber);
 	}
 
-	void print() {
+	void print() const {
 		cout<< "name: "<< clientName<< ", number: "<< accountNumber<< ", balance: "<< balance<< endl;
 	}
 
@@ -42,19 +42,19 @@ public:
 		return true;
 	}
 
-	bool operator==(BankAccount& other) {
+	bool operator==(BankAccount& other) const {
 		return balance == other.balance;
 	}
 
-	bool operator!=(BankAccount& other) {
+	bool operator!=(BankAccount& other) const {
 		return !(*this == other);
 	}
 
-	bool operator<(BankAccount& other) {
+	bool operator<(BankAccount& other) const {
 		return balance < other.balance;
 	}
 
-	bool operator>(BankAccount& other) {
+	bool operator>(BankAccount& other) const {
 		return balance > other.balance;
 	}
 };
