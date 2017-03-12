@@ -42,6 +42,8 @@ public:
 	}
 	
 	void setWord(const char* word, const char* definition) {
+		if(word == NULL || definition == NULL)
+			return;
 		setString(this->word, word);
 		setString(this->definition, definition);
 	}
@@ -71,28 +73,23 @@ public:
 	}
 
 	Word(const Word& other) {
-		freeWord();
-		this->word = other.word;
-		this->definition = other.definition;
-		// they're somewhere in the heap so the stack memory of the words array should be fine
-		*this = other;
+		word = NULL;
+		definition = NULL;
+		setWord(other.word, other.definition);
+		// if its still uninitialized theres no need to delete []
 	}
 
 	Word& operator=(const Word& other){
 		if(this != &other)
-			Word(other);
+			setWord(other.word, other.definition);
 		return *this;
 	}
 
-	void freeWord() {
+	~Word(){
 		delete [] word;
 		word = NULL;
 		delete [] definition;
 		definition = NULL;
-	}
-
-	~Word(){
-		freeWord();
 	}
 
 	void handleMemoryError() {
@@ -139,7 +136,26 @@ public:
 		currWords--;
 	}
 
+	void sort() {
+		for(int i=currWords-1; i>0; i--) {
+			for(int j=0; j<i; j++) {
+				if(words[j] > words[i]) {
+					Word temp; // nowhere to null
+					temp = words[j];
+					words[j] = words[i];
+					words[i] = temp;
+				}
+			}
+		}
+	}
+
 	void printWords() {
+		sort();
+		for(int i=0; i<currWords; i++)
+			cout<< words[i];
+	}
+
+	void print() {
 		for(int i=0; i<currWords; i++)
 			cout<< words[i];
 	}
@@ -150,6 +166,12 @@ int main () {
 	dict.addWord("gosho", "pi4");
 	cout<< dict.findDefinition("gosho")<< endl;
 	dict.removeWord("gosho");
+
+	dict.addWord("aword", "kasj");
+	dict.addWord("bword", "tesdf");
+	dict.addWord("zjkdm", "testz");
+	dict.addWord("gosho", "sadfasdfa");
+	dict.addWord("bword2", "test32");
 	dict.printWords();
 
 	return 0;
