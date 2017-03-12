@@ -1,6 +1,10 @@
 #include<iostream>
 using namespace std;
 
+void handleMemoryError() {
+	cout<< "couldn't allocate memory"<< endl;
+}
+
 int strlen (const char* str) {
 	int i;
 	for(i = 0; str[i]!= '\0'; i++);
@@ -19,6 +23,21 @@ int strcmp(const char* str1, const char* str2) {
 }
 			// if str2[i] = '\0' that's 0 so str1 is constdered greater
 	return (strlen(str1) == strlen(str2)) ? 0 : 1;
+}
+
+char* strcat(const char* str1, const char* str2) {
+	char* resStr = new(std::nothrow) char[strlen(str1)+strlen(str2)+1];
+	if(resStr == NULL) {
+		handleMemoryError();
+		return NULL;
+	}
+	int i=0;
+	for(; str1[i]!='\0'; i++)
+		resStr[i] = str1[i];
+	for(int l=0; str2[l]!='\0'; l++)
+		resStr[l+(i++)] = str2[l];
+	resStr[i] = '\0';
+	return resStr; 
 }
 
 class Word {
@@ -91,10 +110,6 @@ public:
 		delete [] definition;
 		definition = NULL;
 	}
-
-	void handleMemoryError() {
-		cout<< "couldn't allocate memory"<< endl;
-	}
 };
 
 ostream& operator<<(ostream& stream, const Word& word) {
@@ -128,6 +143,10 @@ public:
 		words[currWords++].setWord(word, definition);
 	}
 
+	void addWord(const Word& word) {
+		addWord(word.getWord(), word.getDefinition());
+	}
+
 	void removeWord(const char* word) {
 		int index = findWord(word);
 		if(index == -1)
@@ -155,9 +174,19 @@ public:
 			cout<< words[i];
 	}
 
-	void print() {
-		for(int i=0; i<currWords; i++)
-			cout<< words[i];
+	Dictionary operator+(Dictionary& other) const  {
+		Dictionary resDict;
+		for(int i=0; i<currWords && resDict.currWords < 500; i++)
+			resDict.addWord(words[i]);
+		for(int i=0; i<other.currWords && resDict.currWords < 500; i++){
+			int index = resDict.findWord(words[i].getWord());
+			if(index != -1) {
+				resDict.addWord(other.words[i].getWord(), strcat(resDict.words[index].getDefinition(), other.words[i].getDefinition()));
+			}
+			resDict.addWord(other.words[i]);
+		}
+
+		return resDict;
 	}
 };
 
@@ -172,6 +201,17 @@ int main () {
 	dict.addWord("zjkdm", "testz");
 	dict.addWord("gosho", "sadfasdfa");
 	dict.addWord("bword2", "test32");
+	dict.printWords();
+
+	Dictionary dict2;
+	dict2.addWord("sdaf", "kaasdfsj");
+	dict2.addWord("bwasdford", "dtesdf");
+	dict2.addWord("zasdfjkdm", "tessdatz");
+	dict2.addWord("asdfgosho", "sadsdfdfasdfa");
+	dict2.addWord("gfgdbword2", "tedfsdst32");
+
+	cout<< endl<< endl;
+	dict = dict + dict2;
 	dict.printWords();
 
 	return 0;
