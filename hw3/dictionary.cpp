@@ -75,6 +75,12 @@ public:
 		return definition;
 	}
 
+	void catDefinition(const char* addition) {
+		char* newDef = strcat(definition, addition);
+		delete [] definition;
+		definition = newDef;
+	}
+
 	bool operator>(const Word& other) const {
 		return strcmp(this->word, other.word) == 1;
 	}
@@ -179,9 +185,10 @@ public:
 		for(int i=0; i<currWords && resDict.currWords < 500; i++)
 			resDict.addWord(words[i]);
 		for(int i=0; i<other.currWords && resDict.currWords < 500; i++){
-			int index = resDict.findWord(words[i].getWord());
+			int index = resDict.findWord(other.words[i].getWord());
 			if(index != -1) {
-				resDict.addWord(other.words[i].getWord(), strcat(resDict.words[index].getDefinition(), other.words[i].getDefinition()));
+				resDict.words[index].catDefinition(other.words[i].getDefinition());
+				continue;
 			}
 			resDict.addWord(other.words[i]);
 		}
@@ -204,7 +211,7 @@ int main () {
 	dict.printWords();
 
 	Dictionary dict2;
-	dict2.addWord("sdaf", "kaasdfsj");
+	dict2.addWord("aword", "kaasdfsj");
 	dict2.addWord("bwasdford", "dtesdf");
 	dict2.addWord("zasdfjkdm", "tessdatz");
 	dict2.addWord("asdfgosho", "sadsdfdfasdfa");
