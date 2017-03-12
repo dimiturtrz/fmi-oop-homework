@@ -24,13 +24,19 @@ public:
 	Line(int x1, int y1, int x2, int y2): start(Point(x1, y1)), end(Point(x2, y2)){}
 
 	bool operator||(Line& other) {
-		float slope1 = abs((end.y - start.y)/(end.x-start.x));
-		float slope2 = abs((other.end.y - other.start.y)/(other.end.x-other.start.x));
-		return (slope1 - slope2 < 0.0001);
+		float slope1 = abs(((float)(end.y - start.y))/(end.x-start.x));
+		float slope2 = abs(((float)(other.end.y - other.start.y))/(other.end.x-other.start.x));
+		cout<< slope1<< " "<< slope2<< endl;
+		return (abs(slope1 - slope2) < 0.0001);
 	}
 };
 
 int main () {
+	Line line1 = Line(0, 0, 5, 5);
+	Line line2 = Line(5, 5, 10, 17);
+
+	cout<< (line1||line2)<< endl;
+
 	
 	return 0;
 }
