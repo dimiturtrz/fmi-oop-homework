@@ -35,7 +35,7 @@ char* strcat(const char* str1, const char* str2) {
 	for(; str1[i]!='\0'; i++)
 		resStr[i] = str1[i];
 	for(int l=0; str2[l]!='\0'; l++)
-		resStr[l+(i++)] = str2[l];
+		resStr[i++] = str2[l];
 	resStr[i] = '\0';
 	return resStr; 
 }
@@ -203,19 +203,19 @@ int main () {
 	cout<< dict.findDefinition("gosho")<< endl;
 	dict.removeWord("gosho");
 
-	dict.addWord("aword", "kasj");
-	dict.addWord("bword", "tesdf");
-	dict.addWord("zjkdm", "testz");
-	dict.addWord("gosho", "sadfasdfa");
-	dict.addWord("bword2", "test32");
+	dict.addWord("aword", "test1");
+	dict.addWord("bword", "test2");
+	dict.addWord("zjkdm", "test3");
+	dict.addWord("gosho", "test4");
+	dict.addWord("bword2", "test5");
 	dict.printWords();
 
 	Dictionary dict2;
-	dict2.addWord("aword", "kaasdfsj");
-	dict2.addWord("bwasdford", "dtesdf");
-	dict2.addWord("zasdfjkdm", "tessdatz");
-	dict2.addWord("asdfgosho", "sadsdfdfasdfa");
-	dict2.addWord("gfgdbword2", "tedfsdst32");
+	dict2.addWord("aword", "test6");
+	dict2.addWord("bwasdford", "test7");
+	dict2.addWord("zasdfjkdm", "test8");
+	dict2.addWord("asdfgosho", "test9");
+	dict2.addWord("gfgdbword2", "test10");
 
 	cout<< endl<< endl;
 	dict = dict + dict2;
