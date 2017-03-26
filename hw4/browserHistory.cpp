@@ -1,6 +1,7 @@
 #include<iostream>
 using namespace std;
 
+const int totalMonths = 12;
 enum Month {
 	January = 1, February, March, April,
 	May, June, Jule, August,
@@ -131,7 +132,62 @@ class BrowserHistory {
 		entries = newEntries;
 	}
 
-	
+	BrowserHistory& operator+(const BrowserEntry& newEntry) {
+		addEntry(newEntry);
+		return *this;
+	}
+
+	void print() {
+		for(int i=0; i<N; i++) {
+			cout<< entries[i]<< endl;
+		}
+	}
+
+	int sitesForMonth(Month _month) {
+		int count = 0;
+		for(int i=0; i<N; i++) {
+			if(_month == entries[i].month + 1) {
+				count++;
+			}
+		}
+
+		return count;
+	}
+
+	Month monthForMaxSites() {
+		int monthSites[totalMonths];
+		for(int i=0; i<N; i++) {
+			monthSites[entries[i].month - 1]++;
+		}
+
+		int max = 0;
+		for(int i=0; i<totalMonths; i++) {
+			if(monthSites[i] > monthSites[max]) {
+				max = i;
+			}
+		}
+
+		return Month(monthSites[max] + 1);
+	}
+
+	void deleteLastEntry() {
+		delete &(entries[N--]);
+	}
+
+	BrowserHistory operator+(const BrowserHistory& other) {
+		BrowserHistory sum(N + other.N);
+		BrowserEntry* newEntries = new(nothrow) BrowserEntry[sum.N];
+ 	
+		for(int i=0; i<N; i++) {
+			newEntries[i] = entries[i];
+		}
+
+		for(int i=0; i<N; i++) {
+			newEntries[N + i] = other.entries[i];
+		}
+
+		return sum;
+	}
 };
 
 int main () {
